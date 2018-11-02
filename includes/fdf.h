@@ -12,6 +12,7 @@ typedef struct s_cam
 	double	offsety;
 	double x;
 	double y;
+	double depth_size;
 	int	scale;
 	double **matrix;
 }		t_cam;
@@ -48,7 +49,10 @@ typedef struct s_mlx
 	t_img 	*img;
 	t_map 	*map;
 	t_cam	*cam;
-	double	**buf;
+	double	abs;
+	double	ord;
+	int		relief;
+	int		projection;
 }		t_mlx;
 
 typedef struct s_line
@@ -65,8 +69,9 @@ typedef struct s_line
 
 int	init_map(int fd, t_map **map);
 int	get_coord(int fd, t_map **map);
-t_mlx	*init_window(char *name);
+t_mlx	*init_window(char *name, t_map *map);
 void	draw_map(t_mlx *mlx);
 void	math_test(t_coord c, t_map *map);
 int	bresen_alg(t_mlx *mlx, t_line *line, t_coord *a, t_coord *b);
+int	ft_abs(int c);
 #endif

@@ -49,7 +49,7 @@ t_coord	threed_proj(t_coord p)
 	return (new);
 }
 
-t_coord	parra_project(t_map *map, int x, int y)
+t_coord	parra_project(t_map *map, int x, int y, t_mlx *mlx)
 {
 	t_coord curr;
 
@@ -67,14 +67,16 @@ t_coord	parra_project(t_map *map, int x, int y)
 	curr.x = (curr.x - curr.y) * (M_SQRT2 / 2);
 	curr.y = (M_SQRT2 / sqrt(3)) * curr.z - ((curr.x + curr.y) / sqrt(6));
 	*/
+//	ft_putnbr(mlx->cam->offsetx);
 	int depth_max;
 	depth_max = ft_abs(map->depth_min) + map->depth_max;
-	curr.x = (curr.x - curr.y);
-	curr.y -= curr.z;
-	curr.x *= 32;
-	curr.y *= 32;
+//	curr.z += mlx->relief;
+	curr.x = (curr.x - curr.y) + mlx->abs;
+	curr.y -= curr.z / (8 + mlx->relief) - mlx->ord;
+	curr.x *= mlx->cam->x;
+	curr.y *= mlx->cam->y;
 	curr.x += WIN_W / 3;
-	curr.y += WIN_H / 2;
+	curr.y += WIN_H / 3;
 //	printf("x = %lf\n", curr.x);
 //	printf("y = %lf\n", curr.y);
 //	printf("z = %lf\n", curr.z);
@@ -105,15 +107,15 @@ void	draw_map(t_mlx *mlx)
 //		printf("colonne = %d\n", x);
 		while(x < map->width)
 		{
-			a = parra_project(map, x, y);
+			a = parra_project(map, x, y, mlx);
 //			printf("ligne = %d\n", y);
 			if (y + 1 < map->height)
 			{
-				draw_line(mlx, a, parra_project(map, x, y + 1));
+				draw_line(mlx, a, parra_project(map, x, y + 1, mlx));
 			}
 			if (x + 1 < map->width)
 			{
-				draw_line(mlx, a, parra_project(map, x + 1, y));
+				draw_line(mlx, a, parra_project(map, x + 1, y, mlx));
 			}
 			x++;
 		}
