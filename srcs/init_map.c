@@ -1,8 +1,19 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_map.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gagonzal <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/11/05 11:53:35 by gagonzal          #+#    #+#             */
+/*   Updated: 2018/11/05 12:02:38 by gagonzal         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../includes/fdf.h"
 #include <limits.h>
-int	ft_check_line(char *line)
+
+int		ft_check_line(char *line)
 {
 	int i;
 
@@ -13,13 +24,13 @@ int	ft_check_line(char *line)
 			return (0);
 		i++;
 	}
- 	return (1);
+	return (1);
 }
-
 
 t_map	*get_map(int width, int height)
 {
 	t_map *map;
+
 	if (!(map = malloc(sizeof(t_map))))
 		return (NULL);
 	map->width = width;
@@ -31,11 +42,10 @@ t_map	*get_map(int width, int height)
 	return (map);
 }
 
-
-int	find_width(char *line)
+int		find_width(char *line)
 {
-	char **tmp;
-	int i;
+	char	**tmp;
+	int		i;
 
 	tmp = ft_strsplit(line, ' ');
 	i = 0;
@@ -51,14 +61,13 @@ int	find_width(char *line)
 	return (i);
 }
 
-int	ft_find_map_size(int fd, int *height)
+int		ft_find_map_size(int fd, int *height)
 {
-	char *line;
-	int ret;
-	int width;
-	int y;
+	char	*line;
+	int		ret;
+	int		width;
+	int		y;
 
-	
 	y = 0;
 	width = 0;
 	while ((ret = get_next_line(fd, &line)))
@@ -76,10 +85,10 @@ int	ft_find_map_size(int fd, int *height)
 	return (width);
 }
 
-int	init_map(int fd, t_map **map)
+int		init_map(int fd, t_map **map)
 {
 	int	width;
-	int 	height;
+	int height;
 
 	if (!(width = ft_find_map_size(fd, &height)))
 	{
@@ -89,9 +98,5 @@ int	init_map(int fd, t_map **map)
 	{
 		return (2);
 	}
-//	ft_putnbr(width);
-//	ft_putchar('\n');
-//	ft_putnbr(height);
-//	ft_putchar('\n');
 	return (0);
 }

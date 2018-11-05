@@ -3,12 +3,13 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: baudiber <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: gagonzal <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2018/06/29 00:21:25 by baudiber          #+#    #+#              #
-#    Updated: 2018/06/29 00:23:00 by baudiber         ###   ########.fr        #
+#    Created: 2018/11/05 11:22:59 by gagonzal          #+#    #+#              #
+#    Updated: 2018/11/05 11:25:31 by gagonzal         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
 
 NAME		=	fdf
 
@@ -23,6 +24,7 @@ SRC			=	main.c \
 				get_coord.c	\
 				init_window.c \
 				bresen_alg.c \
+				check_file.c \
 				draw_map.c \
 #get_next_line.c \
 

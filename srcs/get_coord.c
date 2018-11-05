@@ -1,23 +1,32 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_coord.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gagonzal <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/11/05 11:51:06 by gagonzal          #+#    #+#             */
+/*   Updated: 2018/11/05 12:01:31 by gagonzal         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../libft/get_next_line.h"
 #include "../libft/libft.h"
 #include "../includes/fdf.h"
 #include <limits.h>
 
-
 void	find_max_depth(t_map *map)
 {
-	int x;
-	int y;
-	int min;
-	int max;
-	t_coord tmp;
+	int		x;
+	int		y;
+	int		min;
+	int		max;
+	t_coord	tmp;
 
 	y = 0;
 	min = INT_MAX;
 	max = INT_MIN;
-	while(y < map->height)
+	while (y < map->height)
 	{
 		x = 0;
 		while (x < map->width)
@@ -33,7 +42,6 @@ void	find_max_depth(t_map *map)
 	}
 	map->depth_min = min;
 	map->depth_max = max;
-
 }
 
 t_coord	*get_value(int x, int y, char *value)
@@ -48,26 +56,26 @@ t_coord	*get_value(int x, int y, char *value)
 	return (c);
 }
 
-int	get_coord(int fd, t_map **map)
+int		get_coord(int fd, t_map **map)
 {
+	char	*line;
+	char	**tab;
+	int		x;
+	int		y;
+	int		ret;
 
-	char *line;
-	char **tab;
-	int x;
-	int y;
-	int ret;
-	 y = 0;
-	 while ((ret = get_next_line(fd, &line)))
-	 {
+	y = 0;
+	while ((ret = get_next_line(fd, &line)))
+	{
 		x = 0;
 		tab = ft_strsplit(line, ' ');
-	 	while (x < (*map)->width)
+		while (x < (*map)->width)
 		{
 			(*map)->coord[y * (*map)->width + x] = get_value(x, y, tab[x]);
 			x++;
 		}
 		y++;
-	 }
-	 find_max_depth(*map);
-	 return (1);
+	}
+	find_max_depth(*map);
+	return (1);
 }

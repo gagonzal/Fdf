@@ -1,11 +1,20 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gagonzal <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/11/05 11:07:12 by gagonzal          #+#    #+#             */
+/*   Updated: 2018/11/05 12:13:56 by gagonzal         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../includes/fdf.h"
 #include "../libft/libft.h"
 #include <fcntl.h>
-#include <stdlib.h>
 
-int	ft_error(int flag)
+int		ft_error(int flag)
 {
 	if (flag == 1)
 		ft_putendl("./fdf : wrong map values");
@@ -22,13 +31,13 @@ int	ft_error(int flag)
 
 void	ft_move_window(t_mlx *mlx, int key)
 {
-	if (key == 13)
+	if (key == 125)
 		mlx->ord += 1;
-	if (key == 1)
+	if (key == 126)
 		mlx->ord -= 1;
-	if (key == 2)
+	if (key == 124)
 		mlx->abs += 1;
-	if (key == 0)
+	if (key == 123)
 		mlx->abs -= 1;
 	if (key == 15)
 		mlx->relief += 1;
@@ -52,14 +61,13 @@ void	ft_zoom(t_mlx *mlx, int key)
 	draw_map(mlx);
 }
 
-int	handle_key(int key, t_mlx *mlx)
+int		handle_key(int key, t_mlx *mlx)
 {
-	ft_putnbr(key);
-	ft_putchar('\n');
-	if (key == 13 || key == 0 || key == 2 || key == 1 || key == 15 || key == 17)
+	if (key == 125 || key == 124 || key == 123
+		|| key == 126 || key == 15 || key == 17)
 		ft_move_window(mlx, key);
 	if (key == 12 || key == 14)
-	   ft_zoom(mlx, key);
+		ft_zoom(mlx, key);
 	if (key == 53)
 	{
 		mlx_destroy_window(mlx->mlx, mlx->window);
@@ -68,15 +76,17 @@ int	handle_key(int key, t_mlx *mlx)
 	return (0);
 }
 
-int	main(int ac, char **av)
+int		main(int ac, char **av)
 {
-	t_map *map;
+	t_map	*map;
 	t_mlx	*mlx;
-	int ret;
-	int fd;
+	int		ret;
+	int		fd;
 
 	if (ac > 2 || ac == 1)
-		return(ft_error(0));
+		return (ft_error(0));
+	if (ft_check_file(av[1]))
+		return (0);
 	if (!(fd = open(av[1], O_RDONLY)))
 		return (ft_error(-1));
 	if ((ret = init_map(fd, &map)) > 0)
@@ -87,8 +97,6 @@ int	main(int ac, char **av)
 	if (!(mlx = init_window("map", map)))
 		return (ft_error(3));
 	mlx->map = map;
-//	ft_putnbr(map->coord[30]->x);
-//	math_test(*map->coord[19 * 11 - 18], map);
 	draw_map(mlx);
 	mlx_key_hook(mlx->window, handle_key, mlx);
 	mlx_loop(mlx->mlx);
