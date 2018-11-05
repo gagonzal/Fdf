@@ -6,7 +6,7 @@
 #    By: gagonzal <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/05 11:22:59 by gagonzal          #+#    #+#              #
-#    Updated: 2018/11/05 11:25:31 by gagonzal         ###   ########.fr        #
+#    Updated: 2018/11/05 23:39:29 by gagonzal         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,12 +28,12 @@ SRC			=	main.c \
 				draw_map.c \
 #get_next_line.c \
 
-CC 			=	gcc -g
+CC 			=	gcc #-g
 FLAGS		=	-Wall -Werror -Wextra
 INCLUDES	=	-I $(INC_DIR) -I $(LIB_DIR) -I $(MLX_DIR)
 HEADER_H	=	$(INC_DIR)/$(NAME).h
 OBJ 		=	$(addprefix $(OBJ_DIR)/,$(SRC:.c=.o))
-MFLAGS		=	-lm -lmlx -framework OpenGL -framework Appkit -fsanitize=address
+MFLAGS		=	-lm -lmlx -framework OpenGL -framework Appkit #-fsanitize=address
 LIBS 		=	-L $(LIB_DIR) -lft -L $(MLX_DIR) $(MFLAGS)
 
 all: $(NAME)

@@ -6,7 +6,7 @@
 /*   By: gagonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 11:53:35 by gagonzal          #+#    #+#             */
-/*   Updated: 2018/11/05 12:02:38 by gagonzal         ###   ########.fr       */
+/*   Updated: 2018/11/05 23:41:20 by gagonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ t_map	*get_map(int width, int height)
 	map->height = height;
 	map->depth_min = 0;
 	map->depth_max = 0;
-	if (!(map->coord = malloc(sizeof(t_coord *) * width * height)))
+	if (!(map->coord = (t_coord**)malloc(sizeof(t_coord*) * (width * (height + 1)) + 1)))
 		return (NULL);
 	return (map);
 }
