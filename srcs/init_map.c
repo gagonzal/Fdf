@@ -6,7 +6,7 @@
 /*   By: gagonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 11:53:35 by gagonzal          #+#    #+#             */
-/*   Updated: 2018/11/06 01:45:50 by gagonzal         ###   ########.fr       */
+/*   Updated: 2018/11/06 05:02:17 by gagonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int		get_map(t_map *map, int width, int height)
 	map->depth_min = 0;
 	map->depth_max = 0;
 	if (!(map->coord = (t_coord*)malloc(sizeof(t_coord)
-		* (width * (height + 1)) + 1)))
+		* (width * (height + 1)))))
 		return (0);
 	return (1);
 }
@@ -75,10 +75,16 @@ int		ft_find_map_size(int fd, int *height)
 		if (y == 0)
 		{
 			if ((width = find_width(line)) == -1)
+			{
+				free(line);
 				return (0);
+			}
 		}
 		else if (find_width(line) != width)
+		{
+			free(line);
 			return (0);
+		}
 		free(line);
 		y++;
 	}
