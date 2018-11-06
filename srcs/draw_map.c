@@ -6,7 +6,7 @@
 /*   By: gagonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 11:32:09 by gagonzal          #+#    #+#             */
-/*   Updated: 2018/11/05 12:11:07 by gagonzal         ###   ########.fr       */
+/*   Updated: 2018/11/06 02:09:54 by gagonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,13 @@ t_coord	parra_project(t_map *map, int x, int y, t_mlx *mlx)
 {
 	t_coord curr;
 
-	curr = *map->coord[y * map->width + x];
+	curr = map->coord[y * map->width + x];
 	curr.x = (curr.x - curr.y) + mlx->abs;
 	curr.y -= curr.z / (8 + mlx->relief) - mlx->ord;
-	curr.x *= mlx->cam->x;
-	curr.y *= mlx->cam->y;
-	curr.x += WIN_W / 3;
-	curr.y += WIN_H / 3;
+	curr.x *= mlx->cam.x;
+	curr.y *= mlx->cam.y;
+	curr.x += WIN_W / 2;
+	curr.y += WIN_H / 2;
 	return (curr);
 }
 
@@ -60,24 +60,22 @@ void	draw_map(t_mlx *mlx)
 	int		x;
 	int		y;
 	t_coord	a;
-	t_map	*map;
 
 	y = 0;
-	map = mlx->map;
-	ft_bzero(mlx->img->ptr, WIN_W * WIN_H * mlx->img->bpp);
-	while (y < map->height)
+	ft_bzero(mlx->img.ptr, WIN_W * WIN_H * mlx->img.bpp);
+	while (y < mlx->map.height)
 	{
 		x = 0;
-		while (x < map->width)
+		while (x < mlx->map.width)
 		{
-			a = parra_project(map, x, y, mlx);
-			if (y + 1 < map->height)
-				draw_line(mlx, a, parra_project(map, x, y + 1, mlx));
-			if (x + 1 < map->width)
-				draw_line(mlx, a, parra_project(map, x + 1, y, mlx));
+			a = parra_project(&mlx->map, x, y, mlx);
+			if (y + 1 < mlx->map.height)
+				draw_line(mlx, a, parra_project(&mlx->map, x, y + 1, mlx));
+			if (x + 1 < mlx->map.width)
+				draw_line(mlx, a, parra_project(&mlx->map, x + 1, y, mlx));
 			x++;
 		}
 		y++;
 	}
-	mlx_put_image_to_window(mlx->mlx, mlx->window, mlx->img->img, 0, 0);
+	mlx_put_image_to_window(mlx->mlx, mlx->window, mlx->img.img, 0, 0);
 }

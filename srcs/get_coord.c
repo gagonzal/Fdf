@@ -6,7 +6,7 @@
 /*   By: gagonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 11:51:06 by gagonzal          #+#    #+#             */
-/*   Updated: 2018/11/05 12:01:31 by gagonzal         ###   ########.fr       */
+/*   Updated: 2018/11/06 01:44:03 by gagonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	find_max_depth(t_map *map)
 		x = 0;
 		while (x < map->width)
 		{
-			tmp = *map->coord[y * map->width + x];
+			tmp = map->coord[y * map->width + x];
 			if (tmp.z < min)
 				min = tmp.z;
 			if (tmp.z > max)
@@ -44,19 +44,18 @@ void	find_max_depth(t_map *map)
 	map->depth_max = max;
 }
 
-t_coord	*get_value(int x, int y, char *value)
+t_coord	get_value(int x, int y, char *value)
 {
-	t_coord *c;
+	t_coord c;
 
-	c = malloc(sizeof(t_coord));
-	c->x = (double)x;
-	c->y = (double)y;
-	c->z = (double)ft_atoi(value);
-	c->color = 0xFFFFFF;
+	c.x = (double)x;
+	c.y = (double)y;
+	c.z = (double)ft_atoi(value);
+	c.color = 0xFFFFFF;
 	return (c);
 }
 
-int		get_coord(int fd, t_map **map)
+int		get_coord(int fd, t_map *map)
 {
 	char	*line;
 	char	**tab;
@@ -69,13 +68,16 @@ int		get_coord(int fd, t_map **map)
 	{
 		x = 0;
 		tab = ft_strsplit(line, ' ');
-		while (x < (*map)->width)
+		while (x < map->width)
 		{
-			(*map)->coord[y * (*map)->width + x] = get_value(x, y, tab[x]);
+			map->coord[y * map->width + x] = get_value(x, y, tab[x]);
+			free(tab[x]);
 			x++;
 		}
+		free(line);
+		free(tab);
 		y++;
 	}
-	find_max_depth(*map);
+	find_max_depth(map);
 	return (1);
 }

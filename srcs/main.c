@@ -6,7 +6,7 @@
 /*   By: gagonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 11:07:12 by gagonzal          #+#    #+#             */
-/*   Updated: 2018/11/05 12:13:56 by gagonzal         ###   ########.fr       */
+/*   Updated: 2018/11/06 02:12:57 by gagonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,13 @@ void	ft_zoom(t_mlx *mlx, int key)
 {
 	if (key == 12)
 	{
-		mlx->cam->x++;
-		mlx->cam->y++;
+		mlx->cam.x++;
+		mlx->cam.y++;
 	}
 	if (key == 14)
 	{
-		mlx->cam->x--;
-		mlx->cam->y--;
+		mlx->cam.x--;
+		mlx->cam.y--;
 	}
 	draw_map(mlx);
 }
@@ -78,8 +78,7 @@ int		handle_key(int key, t_mlx *mlx)
 
 int		main(int ac, char **av)
 {
-	t_map	*map;
-	t_mlx	*mlx;
+	t_mlx	mlx;
 	int		ret;
 	int		fd;
 
@@ -89,16 +88,15 @@ int		main(int ac, char **av)
 		return (0);
 	if (!(fd = open(av[1], O_RDONLY)))
 		return (ft_error(-1));
-	if ((ret = init_map(fd, &map)) > 0)
+	if ((ret = init_map(fd, &mlx.map)) > 0)
 		return (ft_error(ret));
 	close(fd);
 	fd = open(av[1], O_RDONLY);
-	get_coord(fd, &map);
-	if (!(mlx = init_window("map", map)))
-		return (ft_error(3));
-	mlx->map = map;
-	draw_map(mlx);
-	mlx_key_hook(mlx->window, handle_key, mlx);
-	mlx_loop(mlx->mlx);
+	get_coord(fd, &mlx.map);
+	close(fd);
+	init_window(av[1], &mlx);
+	draw_map(&mlx);
+	mlx_key_hook(mlx.window, handle_key, &mlx);
+	mlx_loop(mlx.mlx);
 	return (0);
 }

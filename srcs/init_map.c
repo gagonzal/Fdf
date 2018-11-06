@@ -6,7 +6,7 @@
 /*   By: gagonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 11:53:35 by gagonzal          #+#    #+#             */
-/*   Updated: 2018/11/06 00:11:42 by gagonzal         ###   ########.fr       */
+/*   Updated: 2018/11/06 01:45:50 by gagonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,20 +27,16 @@ int		ft_check_line(char *line)
 	return (1);
 }
 
-t_map	*get_map(int width, int height)
+int		get_map(t_map *map, int width, int height)
 {
-	t_map *map;
-
-	if (!(map = malloc(sizeof(t_map))))
-		return (NULL);
 	map->width = width;
 	map->height = height;
 	map->depth_min = 0;
 	map->depth_max = 0;
-	if (!(map->coord = (t_coord**)malloc(sizeof(t_coord*)
+	if (!(map->coord = (t_coord*)malloc(sizeof(t_coord)
 		* (width * (height + 1)) + 1)))
-		return (NULL);
-	return (map);
+		return (0);
+	return (1);
 }
 
 int		find_width(char *line)
@@ -54,11 +50,14 @@ int		find_width(char *line)
 	{
 		if (!(ft_check_line(tmp[i])))
 		{
+			free(tmp[i]);
 			i = -1;
 			break ;
 		}
+		free(tmp[i]);
 		i++;
 	}
+	free(tmp);
 	return (i);
 }
 
@@ -80,13 +79,14 @@ int		ft_find_map_size(int fd, int *height)
 		}
 		else if (find_width(line) != width)
 			return (0);
+		free(line);
 		y++;
 	}
 	*height = y - 1;
 	return (width);
 }
 
-int		init_map(int fd, t_map **map)
+int		init_map(int fd, t_map *map)
 {
 	int	width;
 	int height;
@@ -95,7 +95,7 @@ int		init_map(int fd, t_map **map)
 	{
 		return (1);
 	}
-	if ((*map = get_map(width, height)) == NULL)
+	if ((get_map(map, width, height)) == 0)
 	{
 		return (2);
 	}

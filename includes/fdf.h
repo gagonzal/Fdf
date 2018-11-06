@@ -6,7 +6,7 @@
 /*   By: gagonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 12:15:53 by gagonzal          #+#    #+#             */
-/*   Updated: 2018/11/05 12:19:59 by gagonzal         ###   ########.fr       */
+/*   Updated: 2018/11/06 01:53:29 by gagonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ typedef struct	s_map
 	int		height;
 	int		depth_min;
 	int		depth_max;
-	t_coord	**coord;
+	t_coord	*coord;
 }				t_map;
 
 typedef struct	s_img
@@ -59,9 +59,9 @@ typedef struct	s_mlx
 {
 	void	*mlx;
 	void	*window;
-	t_img	*img;
-	t_map	*map;
-	t_cam	*cam;
+	t_img	img;
+	t_map	map;
+	t_cam	cam;
 	double	abs;
 	double	ord;
 	int		relief;
@@ -80,9 +80,9 @@ typedef struct	s_line
 	int		e2;
 }				t_line;
 
-int				init_map(int fd, t_map **map);
-int				get_coord(int fd, t_map **map);
-t_mlx			*init_window(char *name, t_map *map);
+int				init_map(int fd, t_map *map);
+int				get_coord(int fd, t_map *map);
+void			init_window(char *name, t_mlx *mlx);
 void			draw_map(t_mlx *mlx);
 void			math_test(t_coord c, t_map *map);
 int				bresen_alg(t_mlx *mlx, t_line *line, t_coord *a, t_coord *b);

@@ -6,18 +6,18 @@
 /*   By: gagonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 11:31:21 by gagonzal          #+#    #+#             */
-/*   Updated: 2018/11/05 12:00:24 by gagonzal         ###   ########.fr       */
+/*   Updated: 2018/11/06 01:22:49 by gagonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft/libft.h"
 #include "../includes/fdf.h"
 
-void	put_pixel_to_img(t_img *img, int x, int y, int color)
+void	put_pixel_to_img(t_img img, int x, int y, int color)
 {
 	if (x < 0 || x >= WIN_W || y < 0 || y >= WIN_H)
 		return ;
-	*(int*)(img->ptr + ((x + y * WIN_W) * img->bpp)) = color;
+	*(int*)(img.ptr + ((x + y * WIN_W) * img.bpp)) = color;
 }
 
 double	ft_ilerp(double val, double start, double end)
