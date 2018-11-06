@@ -6,7 +6,7 @@
 /*   By: gagonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 11:32:09 by gagonzal          #+#    #+#             */
-/*   Updated: 2018/11/06 02:09:54 by gagonzal         ###   ########.fr       */
+/*   Updated: 2018/11/06 11:13:49 by gagonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,10 @@ t_coord	parra_project(t_map *map, int x, int y, t_mlx *mlx)
 
 	curr = map->coord[y * map->width + x];
 	curr.x = (curr.x - curr.y) + mlx->abs;
-	curr.y -= curr.z / (8 + mlx->relief) - mlx->ord;
+	if (ft_abs(mlx->relief) != 10)
+		curr.y -= curr.z / (10 + mlx->relief) - mlx->ord;
+	else
+		curr.y -= curr.z / (10 + (mlx->relief - 1)) - mlx->ord;
 	curr.x *= mlx->cam.x;
 	curr.y *= mlx->cam.y;
 	curr.x += WIN_W / 2;

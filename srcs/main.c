@@ -6,7 +6,7 @@
 /*   By: gagonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 11:07:12 by gagonzal          #+#    #+#             */
-/*   Updated: 2018/11/06 02:12:57 by gagonzal         ###   ########.fr       */
+/*   Updated: 2018/11/06 10:58:59 by gagonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void	ft_move_window(t_mlx *mlx, int key)
 		mlx->relief += 1;
 	if (key == 17)
 		mlx->relief -= 1;
+	ft_putnbr(mlx->relief);
+	ft_putchar('\n');
 	draw_map(mlx);
 }
 
@@ -86,7 +88,7 @@ int		main(int ac, char **av)
 		return (ft_error(0));
 	if (ft_check_file(av[1]))
 		return (0);
-	if (!(fd = open(av[1], O_RDONLY)))
+	if ((fd = open(av[1], O_RDONLY)) == -1)
 		return (ft_error(-1));
 	if ((ret = init_map(fd, &mlx.map)) > 0)
 		return (ft_error(ret));

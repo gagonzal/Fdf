@@ -6,7 +6,7 @@
 /*   By: gagonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 12:15:53 by gagonzal          #+#    #+#             */
-/*   Updated: 2018/11/06 01:53:29 by gagonzal         ###   ########.fr       */
+/*   Updated: 2018/11/06 10:54:48 by gagonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,5 +88,6 @@ void			math_test(t_coord c, t_map *map);
 int				bresen_alg(t_mlx *mlx, t_line *line, t_coord *a, t_coord *b);
 int				ft_abs(int c);
 int				ft_check_file(char *map);
+int				ft_check_spaces(char *line);
 
 #endif

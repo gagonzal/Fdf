@@ -6,7 +6,7 @@
 /*   By: gagonzal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 11:53:35 by gagonzal          #+#    #+#             */
-/*   Updated: 2018/11/06 05:02:17 by gagonzal         ###   ########.fr       */
+/*   Updated: 2018/11/06 11:24:50 by gagonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int		find_width(char *line)
 	i = 0;
 	while (tmp[i])
 	{
-		if (!(ft_check_line(tmp[i])))
+		if (!(ft_check_spaces(line)) || !(ft_check_line(tmp[i])))
 		{
 			free(tmp[i]);
 			i = -1;
@@ -72,13 +72,10 @@ int		ft_find_map_size(int fd, int *height)
 	width = 0;
 	while ((ret = get_next_line(fd, &line)))
 	{
-		if (y == 0)
+		if (y == 0 && ((width = find_width(line)) == -1))
 		{
-			if ((width = find_width(line)) == -1)
-			{
-				free(line);
-				return (0);
-			}
+			free(line);
+			return (0);
 		}
 		else if (find_width(line) != width)
 		{
